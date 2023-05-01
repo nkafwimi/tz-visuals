@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <!-- add title -->
+    
+    <!-- import required libraries here -->
+    <script type="text/javascript" src="../lib/d3-dsv.min.js"></script>
+    <script type="text/javascript" src="../lib/d3-geo-projection.v2.min.js"></script>
+    <script type="text/javascript" src="../lib/d3-legend.min.js"></script>
+    <script type="text/javascript" src="../lib/d3-tip.min.js"></script>
+    <script type="text/javascript" src="../lib/d3.v5.min.js"></script>
+    <script type="text/javascript" src="../lib/topojson.v2.min.js"></script>
+    
+    <style>
+        /* define CSS rules here */
+    
+    </style>
+
+    <title>World Mapping for Popular Games</title>
+</head>
+
+<body>
+    <!-- Add heading for the visualization -->
+    
+    <!-- Create dropdown element here. Options should be added after reading in game file, they should not be created here.-->
+    
+    <!-- append visualization svg to this div-->
+    <div id="choropleth"></div>
+
+    <script type="text/javascript">
+    
+        // enter code to define margin and dimensions for svg
+        
+        // enter code to create svg
+
+        var w = 1000;
+        var h = 800;
+
+        var svg = d3.select("body")
+                    .append("svg")  
+                    .attr("width", w)
+                    .attr("height", h);
+
+        
+        // enter code to create color scale
+        
+        // enter code to define tooltip
+        
+        // enter code to define projection and path required for Choropleth
+        // For grading, set the name of functions for projection and path as "projection" and "path"
+        // var projection = 
+        var projection = d3.geoNaturalEarth1()
+                           .translate([w/2,h/2]);
+        
+
+        // var path =
+
+        var path = d3.geoPath().projection(projection);
+        
+        // define any other global variables 
+
+        var world = d3.json("world_countries.json")
+
+        Promise.all([world
+            // enter code to read files
+
+            
+            
+        ]).then(
+            // enter code to call ready() with required arguments
+
+            function(values){
+
+                            svg.selectAll("path")
+                            .data(values[0].features)
+                            .enter()
+                            .append("path")
+                            .attr("d",path)
+
+                            }
+            
+        );
+        
+        // this function should be called once the data from files have been read
+        // world: topojson from world_countries.json
+        // gameData: data from ratings-by-country.csv
+        
+        function ready(error, world, gameData) {
+            // enter code to extract all unique games from gameData
+
+            // enter code to append the game options to the dropdown
+            
+            // event listener for the dropdown. Update choropleth and legend when selection changes. Call createMapAndLegend() with required arguments.
+            
+            // create Choropleth with default option. Call createMapAndLegend() with required arguments. 
+        }
+
+        // this function should create a Choropleth and legend using the world and gameData arguments for a selectedGame
+        // also use this function to update Choropleth and legend when a different game is selected from the dropdown
+        function createMapAndLegend(world, gameData, selectedGame){ 
+        
+            
+        }
+    </script>
+
+</body>
+
+</html>

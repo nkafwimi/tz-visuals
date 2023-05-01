@@ -1,0 +1,83 @@
+var change = function() {
+    var source = dropdown.node().options[dropdown.node().selectedIndex].value;
+  
+  
+  var str1 = source;
+  var str2 = ".json";
+  var file = str1.concat(str2);
+  console.log(file);
+  
+  
+    d3.json(file, function(error, europe) {
+  
+    d3.csv("povertry_rate.csv", function(error, povrate) {
+  
+  
+      //change the map to apadpt to the nuts file
+      if (source == "nuts1") {
+  
+      var land = topojson.feature(europe, europe.objects.nuts1);
+  
+      } else if (source == "nuts2") {
+  
+      var land = topojson.feature(europe, europe.objects.nuts2);
+  
+      }
+  
+  
+      data = {};
+      povrate.forEach(function(d) {
+        data[d.GEO] = d['2013'];
+      });
+  
+      console.info(data);
+      svg.selectAll("path")
+        .data(land.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .style("stroke","#000")
+        .style("stroke-width",".5px")
+        .style("fill",function(d){
+              var value = data[d.id];
+              if (isNaN(value)){
+                value = data[d.id.substring(0,2)];
+              }
+              if (isNaN(value)){
+                return "#fff";
+              }
+  
+              return scale(value);
+              })
+        .on("mouseover", function(d,i) {
+              var value = data[d.id];
+              if (isNaN(value)){
+                value = data[d.id.substring(0,2)];
+              }
+              div.transition()
+                  .duration(200)
+                  .style("opacity", 0.9);
+              div.html("<b>"+d.properties.name+"</b><br/>" + value + "%")
+                  .style("left", (d3.event.pageX) + "px")
+                  .style("top", (d3.event.pageY - 28) + "px");
+          })
+        .on("mouseout", function(d,i) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+          });
+  
+          svg
+            .append("path")
+              .style("fill","none")
+              .style("stroke","#000")
+              .attr("d", projection.getCompositionBorders());
+  
+  
+    });
+  
+  
+  
+  
+    })
+  }
