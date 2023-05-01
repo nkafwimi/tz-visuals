@@ -3,7 +3,7 @@ Mapping out publicly available data for different sectors in Tanzania using d3 c
 
 The template included here is in progress and uses gaming data around the world. It is built off using d3, javascript, html and css. 
 
-## Technology (used on template: Q5)
+## Technology (used on template file: world-map)
 - D3 Version 5 (included in the lib folder)
 - Chrome v92.0 (or higher): the browser for grading your code
 - Python http server (for local testing)
